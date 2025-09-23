@@ -106,10 +106,6 @@ export const Listadealumnos = () => {
                     <Text style={style.navText}> Inicio</Text>
                 </View>
                 <View style={style.navItem}>
-                    <Ionicons name="save" size={24} color={'#000000ff'} />
-                    <Text style={style.navText}> Guardar</Text>
-                </View>
-                <View style={style.navItem}>
                     <Ionicons name="person" size={24} color={'#000000ff'} />
                     <Text style={style.navText}> Usuario</Text>
                 </View>
