@@ -2,7 +2,7 @@ import{ View, Text, StatusBar, Platform,StyleSheet,SafeAreaView,Image,TouchableO
 import { FontAwesome, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { ScrollView } from "react-native";
 
-export const ListaAlumnos = () => {
+export const Listadealumnos = () => {
     return (
         <SafeAreaView style={style.mainS}>
             {/* inicio de AppBar */}
