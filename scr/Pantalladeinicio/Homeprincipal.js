@@ -1,18 +1,18 @@
 import  Ionicons  from "@expo/vector-icons/FontAwesome";
 import { View, Text, StyleSheet, Platform, StatusBar, TouchableOpacity } from "react-native";
-import CardImg from "../../componets/CardImg";
+import Cardimg from "../componentes/Cardimg";
 
 
-export default function HomePrincipal () {
+export default function Homeprincipal () {
  return (
-  <ScrollView>
+  
     <View style={style.mainS}>
         <Text style ={style.title}> Pagina Principal </Text>
        
-      <CardImg/>
+      <Cardimg/>
         
     </View>
-    </ScrollView>
+   
   );
 }
 
