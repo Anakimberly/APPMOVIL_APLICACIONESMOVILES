@@ -26,15 +26,15 @@ const styles = StyleSheet.create({
     flex: 1, 
     justifyContent: 'center', 
     alignItems: 'center', 
-    backgroundColor: '#f5f5f5' 
+    backgroundColor: '#ffbb9bff' 
   },
   title: { 
-    fontSize: 24, 
+    fontSize: 30, 
     fontWeight: 'bold', 
     marginBottom: 20 
   },
   card: { 
-    backgroundColor: '#4a90e2', 
+    backgroundColor: '#c16f34ff', 
     padding: 20, 
     marginVertical: 10, 
     borderRadius: 10, 
