@@ -1,8 +1,12 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function Home() {
+    const navigation = useNavigation();
+
   return (
     
 
@@ -14,9 +18,13 @@ export default function Home() {
         <Text style={style.cardText}>Ver Libros</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={style.card}>
-        <Text style={style.cardText}>Lista de Alumnos</Text>
-      </TouchableOpacity>
+      <TouchableOpacity 
+  style={style.card} 
+  onPress={() => navigation.navigate('ListaAlumnos')}
+>
+  <Text style={style.cardText}>Lista de Alumnos</Text>
+</TouchableOpacity>
+
 
       <TouchableOpacity style={style.card}>
         <Text style={style.cardText}>Registrar Alumno</Text>
@@ -43,6 +51,7 @@ export default function Home() {
 }
 
 const style = StyleSheet.create({
+    
   container: { 
     flex: 1, 
     justifyContent: 'center', 

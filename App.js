@@ -6,6 +6,14 @@ export default function App() {
   return (
     //<BotonCambio/>
     //<Home/>
-    <Listadealumnos />
-   ); 
+    //<Listadealumnos />
+
+      <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+        <Stack.Screen name="ListaAlumnos" component={Listadealumnos} options={{ title: 'Alumnos Registrados' }} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+   
 }
