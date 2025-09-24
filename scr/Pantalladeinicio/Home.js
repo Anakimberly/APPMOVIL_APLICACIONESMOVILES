@@ -20,7 +20,7 @@ export default function Home() {
 
       <TouchableOpacity 
   style={style.card} 
-  onPress={() => navigation.navigate('ListaAlumnos')}
+  onPress={() => navigation.navigate('Listadealumnos')}
 >
   <Text style={style.cardText}>Lista de Alumnos</Text>
 </TouchableOpacity>
@@ -30,19 +30,7 @@ export default function Home() {
         <Text style={style.cardText}>Registrar Alumno</Text>
       </TouchableOpacity>
 
-       {/* navbar*/}
-            <View style={style.navbar}>
-                <View style={style.navItem}>
-                    <Ionicons name="home" size={24} color={'#000000ff'} />
-                    <Text style={style.navText}> Inicio</Text>
-                </View>
-                
-                <View style={style.navItem}>
-                    <Ionicons name="person" size={24} color={'#000000ff'} />
-                    <Text style={style.navText}> Usuario</Text>
-                </View>
-                </View>
-            {/* fin de navbar */}
+       
             
     </View>
   
