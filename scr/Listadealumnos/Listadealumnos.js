@@ -14,6 +14,8 @@ export const Listadealumnos = () => {
     { nombre: 'Romina Santiago', carrera: 'Ing. Mecatronica', matricula: '22620053', grupo: '7UM', avatar: 'https://i.pinimg.com/236x/56/77/62/5677627c338956d1cb9bbdb7f49ae79e.jpg' },
     { nombre: 'Sergio Gomez', carrera: 'Ing. Civil', matricula: '22620053', grupo: '7BA', avatar: 'https://i.pinimg.com/236x/e9/57/2a/e9572a70726980ed5445c02e1058760b.jpg' },
     { nombre: 'Ameli Reyes', carrera: 'Ing. Sistemas Computacionales', matricula: '22620053', grupo: '7BS', avatar: 'https://c0.klipartz.com/pngpicture/517/749/gratis-png-equipo-iconos-usuario-perfil-avatar-mujer-joven-thumbnail.png' },
+     { nombre: 'Ameli Reyes', carrera: 'Ing. Sistemas Computacionales', matricula: '22620053', grupo: '7BS', avatar: 'https://c0.klipartz.com/pngpicture/517/749/gratis-png-equipo-iconos-usuario-perfil-avatar-mujer-joven-thumbnail.png' },
+
   ];
 
   return (
@@ -59,17 +61,7 @@ export const Listadealumnos = () => {
         ))}
       </ScrollView>
 
-      {/* Navbar */}
-      <View style={style.navbar}>
-        <View style={style.navItem}>
-          <Ionicons name="home" size={24} color={'#000000ff'} />
-          <Text style={style.navText}> Inicio</Text>
-        </View>
-        <View style={style.navItem}>
-          <Ionicons name="person" size={24} color={'#000000ff'} />
-          <Text style={style.navText}> Usuario</Text>
-        </View>
-      </View>
+     
     </SafeAreaView>
   );
 };

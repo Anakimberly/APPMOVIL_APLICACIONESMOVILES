@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function Home() {
     const navigation = useNavigation();
+  
 
   return (
     
@@ -14,12 +15,14 @@ export default function Home() {
       <Text style={style.title}>Biblioteca Escolar</Text>
        <Image style = {style.img} source={{uri:'https://hips.hearstapps.com/hmg-prod/images/traditional-wooden-steps-in-vintage-library-royalty-free-image-1666591817.jpg?crop=0.6763xw:1xh;center,top&resize=640:*'}}/>
 
-      <TouchableOpacity style={style.card}>
+    
+  <TouchableOpacity style={style.card}
+    onPress={() => navigation.navigate('Libros')}
+    >
         <Text style={style.cardText}>Ver Libros</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity 
-  style={style.card} 
+      <TouchableOpacity style={style.card} 
   onPress={() => navigation.navigate('Listadealumnos')}
 >
   <Text style={style.cardText}>Lista de Alumnos</Text>
