@@ -12,7 +12,7 @@ export default function Home() {
     
 
     <View style={style.container}>
-      <Text style={style.title}>Biblioteca Escolar</Text>
+      <Text style={style.title}>BIBLIOTECA ESCOLAR</Text>
        <Image style = {style.img} source={{uri:'https://hips.hearstapps.com/hmg-prod/images/traditional-wooden-steps-in-vintage-library-royalty-free-image-1666591817.jpg?crop=0.6763xw:1xh;center,top&resize=640:*'}}/>
 
     
@@ -29,7 +29,9 @@ export default function Home() {
 </TouchableOpacity>
 
 
-      <TouchableOpacity style={style.card}>
+      <TouchableOpacity style={style.card}
+       onPress={() => navigation.navigate('Registraralumnos')}
+>
         <Text style={style.cardText}>Registrar Alumno</Text>
       </TouchableOpacity>
 
