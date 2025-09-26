@@ -19,16 +19,12 @@ const db = mysql.createConnection({
 db.connect(err => {
   if (err) {
     console.error("Error al conectar a MySQL:", err);
-    process.exit(1); // salir si falla la conexión
+    process.exit(1);
   }
   console.log("Conectado a MySQL");
 });
 
-// =====================
-// RUTAS
-// =====================
 
-// Obtener todos los alumnos
 app.get('/biblioteca', (req, res) => {
   const sql = 'SELECT * FROM biblioteca';
   db.query(sql, (err, results) => {
@@ -49,7 +45,7 @@ app.post('/biblioteca', (req, res) => {
 
 // Eliminar alumno
 app.delete('/biblioteca/:id', (req, res) => {
-  const id = parseInt(req.params.id, 10); // asegurar que sea número
+  const id = parseInt(req.params.id, 10); 
   console.log("ID recibido para DELETE:", id);
 
   if (isNaN(id)) return res.status(400).json({ error: "ID inválido" });
@@ -62,11 +58,7 @@ app.delete('/biblioteca/:id', (req, res) => {
   });
 });
 
-// =====================
-// INICIAR SERVIDOR
-// =====================
 
-// Escucha en toda la LAN
 app.listen(3000, '0.0.0.0', () => {
   console.log("Servidor corriendo en http://192.168.1.68:3000");
 });

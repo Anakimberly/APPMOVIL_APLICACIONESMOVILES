@@ -36,7 +36,6 @@ export default function Listadealumnos() {
     try {
       const idLimpio = encodeURIComponent(String(id).trim());
 
-      // Confirmación
       const confirmar = await new Promise((resolve) => {
         Alert.alert(
           "Eliminar alumno",
@@ -50,7 +49,6 @@ export default function Listadealumnos() {
 
       if (!confirmar) return;
 
-      // Llamada DELETE
       const res = await fetch(`http://192.168.1.68:3000/biblioteca/${idLimpio}`, {
         method: "DELETE",
         headers: { 'Content-Type': 'application/json' }
@@ -61,7 +59,6 @@ export default function Listadealumnos() {
         throw new Error(errorText || "Error al eliminar");
       }
 
-      // Actualizar lista local
       setAlumnos(prev => prev.filter(alumno => Number(alumno.id) !== Number(idLimpio)));
 
       Alert.alert("Éxito", "Alumno eliminado correctamente");
@@ -74,21 +71,24 @@ export default function Listadealumnos() {
   return (
     <SafeAreaView style={style.mainS}>
       <Text style={style.appBarTitle}>ALUMNOS REGISTRADOS</Text>
-      <ScrollView contentContainerStyle={{ padding: 16 }}>
+      <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32 }}>
         {alumnos.length === 0 ? (
-          <Text style={{ textAlign: 'center', marginTop: 20 }}>No hay alumnos registrados</Text>
+          <Text style={style.emptyText}>No hay alumnos registrados</Text>
         ) : (
           alumnos.map((alumno) => (
             <View key={alumno.id} style={style.card}>
-              <View style={style.cardinfo}>
+              <View style={style.cardInfo}>
                 <Text style={style.userName}>{alumno.nombre}</Text>
                 <Text style={style.userDetails}>{alumno.carrera}</Text>
-                <Text style={style.userDetails}>{alumno.numero_control}</Text>
+                <Text style={style.userDetails}>Control: {alumno.numero_control}</Text>
                 {alumno.libro ? <Text style={style.userDetails}>Libro: {alumno.libro}</Text> : null}
               </View>
 
-              {/* Botón eliminar */}
-              <TouchableOpacity onPress={() => handleEliminar(alumno.id)} style={style.botonConIcono}>
+              <TouchableOpacity 
+                onPress={() => handleEliminar(alumno.id)} 
+                style={style.botonConIcono} 
+                activeOpacity={0.7}
+              >
                 <Ionicons name="trash" size={22} color={'#d9534f'} />
               </TouchableOpacity>
             </View>
@@ -102,40 +102,55 @@ export default function Listadealumnos() {
 const style = StyleSheet.create({
   mainS: {
     flex: 1,
-    backgroundColor: "#fae1c7ff",
+    backgroundColor: "#fff5ee",
   },
   appBarTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 20
+    marginVertical: 20,
+    color: '#333'
+  },
+  emptyText: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#888',
+    marginTop: 40
   },
   card: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#f1c796ff",
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 12,
+    backgroundColor: "#ffe4c4",
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 14,
     shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    elevation: 4,
   },
-  cardinfo: {
+  cardInfo: {
     flex: 1
   },
-  botonConIcono: {
-    padding: 8
-  },
   userName: {
-    fontSize: 16,
-    fontWeight: 'bold'
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333'
   },
   userDetails: {
     fontSize: 14,
-    color: '#333'
+    color: '#555'
+  },
+  botonConIcono: {
+    padding: 8,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3
   }
 });

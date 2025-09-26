@@ -1,9 +1,10 @@
-  import { Platform, StatusBar, StyleSheet, SafeAreaView, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import React, { useState } from 'react';
+import { 
+  Platform, StatusBar, StyleSheet, SafeAreaView, Text, TextInput, TouchableOpacity, Alert, View 
+} from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
 
 export default function Registraralumnos({ navigation }) {
-
   const [nombre, setNombre] = useState('');
   const [carrera, setCarrera] = useState('');
   const [libro, setLibro] = useState('');
@@ -15,10 +16,21 @@ export default function Registraralumnos({ navigation }) {
       return;
     }
 
-    const alumno = { nombre, carrera, libro, numeroControl };
+    const numero = Number(numeroControl);
+    if (isNaN(numero) || numero <= 0) {
+      Alert.alert("Error", "Número de control inválido");
+      return;
+    }
+
+    const alumno = {
+      nombre,
+      carrera,
+      libro,
+      numero_control: numero
+    };
 
     try {
-      const response = await fetch('http://192.168.1.68:3000/biblioteca', { 
+      const response = await fetch('http://192.168.1.68:3000/biblioteca', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(alumno)
@@ -27,10 +39,14 @@ export default function Registraralumnos({ navigation }) {
       const data = await response.json();
 
       if (response.ok) {
-        Alert.alert("Éxito", data.message);
-        navigation.navigate('Listadealumnos', { nuevoAlumno: { ...alumno, matricula: numeroControl } });
+        const mensaje = typeof data.message === "string" ? data.message : JSON.stringify(data.message);
+        Alert.alert("Éxito", mensaje);
+        navigation.navigate('Listadealumnos', { 
+          nuevoAlumno: { ...alumno, matricula: numeroControl } 
+        });
       } else {
-        Alert.alert("Error", data.error);
+        const mensajeError = typeof data.error === "string" ? data.error : JSON.stringify(data.error);
+        Alert.alert("Error", mensajeError);
       }
     } catch (error) {
       Alert.alert("Error", "No se pudo conectar con el servidor");
@@ -39,29 +55,65 @@ export default function Registraralumnos({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={style.mainS}> 
+    <SafeAreaView style={style.mainS}>
       <TouchableOpacity style={style.backButton} onPress={() => navigation.goBack()}></TouchableOpacity>
       <Text style={style.title}>REGISTRO DE ALUMNOS</Text>
 
-      <Text style={style.label}>Nombre:</Text>
-      <TextInput style={style.input} placeholder="Escribe tu nombre"
-       value={nombre} onChangeText={setNombre}/> 
+      {/* Nombre */}
+      <View style={style.inputContainer}>
+        <Ionicons name="person" size={20} color="#aaa" style={{marginRight: 8}} />
+        <TextInput
+          style={style.input}
+          placeholder="Escribe tu nombre"
+          placeholderTextColor="#999"
+          value={nombre}
+          onChangeText={setNombre}
+        />
+      </View>
 
-      <Text style={style.label}>Carrera:</Text>
-      <TextInput editable={true} style={style.input} placeholder="Escribe tu carrera" 
-      value={carrera} onChangeText={setCarrera}/> 
+      {/* Carrera */}
+      <View style={style.inputContainer}>
+        <Ionicons name="school" size={20} color="#aaa" style={{marginRight: 8}} />
+        <TextInput
+          style={style.input}
+          placeholder="Escribe tu carrera"
+          placeholderTextColor="#999"
+          value={carrera}
+          onChangeText={setCarrera}
+        />
+      </View>
 
-      <Text style={style.label}>Libro Adquirido:</Text>
-      <TextInput multiline={true} numberOfLines={4} style={[style.input, style.textArea]} 
-      placeholder="Escribe el nombre del libro" value={libro} onChangeText={setLibro}/> 
+      {/* Libro */}
+      <View style={[style.inputContainer, style.textArea]}>
+        <Ionicons name="book" size={20} color="#aaa" style={{marginRight: 8, marginTop: 8}} />
+        <TextInput
+          multiline
+          numberOfLines={4}
+          style={[style.input, {height: 90}]}
+          placeholder="Escribe el nombre del libro"
+          placeholderTextColor="#999"
+          value={libro}
+          onChangeText={setLibro}
+        />
+      </View>
 
-      <Text style={style.label}>Numero de control:</Text>
-      <TextInput style={style.input} placeholder="123456" keyboardType="numeric"
-       value={numeroControl} onChangeText={setNumeroControl}/>   
+      {/* Número de control */}
+      <View style={style.inputContainer}>
+        <Ionicons name="barcode" size={20} color="#aaa" style={{marginRight: 8}} />
+        <TextInput
+          style={style.input}
+          placeholder="123456"
+          placeholderTextColor="#999"
+          keyboardType="numeric"
+          maxLength={10}
+          value={numeroControl}
+          onChangeText={text => setNumeroControl(text.replace(/[^0-9]/g, ''))}
+        />
+      </View>
 
-      
-      <TouchableOpacity style={style.botonConIcono} onPress={handleGuardar}>
-        <Ionicons name="save" size={20} color={'#000000ff'} style={style.iconoIzquierda}/>
+      {/* Botón Guardar */}
+      <TouchableOpacity style={style.botonConIcono} onPress={handleGuardar} activeOpacity={0.7}>
+        <Ionicons name="save" size={20} color={'#fff'} style={style.iconoIzquierda} />
         <Text style={style.textoBoton}>Guardar</Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -69,49 +121,68 @@ export default function Registraralumnos({ navigation }) {
 }
 
 const style = StyleSheet.create({
-  mainS:{
-    flex:1,
-    backgroundColor: '#fcfcfcff',
+  mainS: {
+    flex: 1,
+    backgroundColor: '#fff8f0',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 44,
-    padding: 16
+    padding: 16,
   },
-  title:{
-    paddingTop:30,
-    fontSize: 30,
+  title: {
+    fontSize: 28,
     fontWeight: 'bold',
-    marginTop: 5,
-    textAlign:'center'
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#333'
   },
-  label:{
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    marginBottom: 12,
+  },
+  input: {
+    flex: 1,
+    paddingVertical: 8,
+    fontSize: 16,
+    color: '#333'
+  },
+  textArea: {
+    alignItems: 'flex-start'
+  },
+  botonConIcono: {
+    backgroundColor: '#f4a261',
+    marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 14,
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  iconoIzquierda: {
+    marginRight: 10
+  },
+  textoBoton: {
+    color: '#fff',
     fontWeight: 'bold',
-    marginTop:10,
-    marginBottom:10
+    fontSize: 16
   },
-  input:{
-    borderWidth:1,
-    borderColor:'#aaa',
-    borderRadius:10,
-    padding: 8
-  },
-  textArea:{
-    height:100,
-    textAlignVertical:'top'
-  },
-  botonConIcono:{
-    backgroundColor: '#c6c6c6ff',
-    marginTop:10,
-    flexDirection:'row',
-    alignContent:'center',
-    justifyContent:'center',
-    paddingVertical:12,
-    borderRadius:15
-  },
-  iconoIzquierda:{
-    marginRight:10
-  },
-  textoBoton:{
-    color: '#000000ff',
-    fontWeight: 'bold',
-    textAlign: 'center'
-  },
+  backButton: {
+    height: 40,
+    width: 40,
+    marginBottom: 20
+  }
 });
